@@ -72,9 +72,9 @@ estimator: {
   ## Measurement Processing
   enable_partial_update: true,
   enable_out_of_order: false, # TODO this isnt fully implemented
-  use_mocap: false,
-  use_gnss: true,
-  use_baro: true,
+  use_mocap: true,
+  use_gnss: false,
+  use_baro: false,
   use_range: false,
   use_zero_vel: true, #publishes zeros for the estimator until the quad starts flying, prevents drift before flight
   R_zero_vel: [0.001, 0.001, 0.001, # vel

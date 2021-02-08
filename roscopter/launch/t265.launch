@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<launch>
+  <!-- Parameter Arguments -->
+  <!-- mav_name is used for parameter filenames, and for the gazebo link name, Exclude dot extensions -->
+  <arg name="mav_name" value="quadcopter"/>
+  <arg name="waypoint_list" value="waypoints"/>
+
+  <!-- Load  Parameters -->
+  <rosparam command="load" file="$(find roscopter)/params/$(arg mav_name).yaml"/>
+  <rosparam command="load" file="$(find roscopter)/params/$(arg waypoint_list).yaml"/>
+
+
+  <!-- FCU communication -->
+  <node name="rosflight_io" pkg="rosflight" type="rosflight_io" output="screen">
+    <param name="udp" value="false"/>
+    <param name="port" value="/dev/ttyACM0"/>
+  </node>
+
+  <!-- Run T265 -->
+  <include file="$(find realsense2_camera)/launch/demo_t265.launch"/>
+
+  <!-- Add something to convert/calibrate t265 odom? -->
+  <node name="nav2geo" pkg="cdc-scripts" type="nav2geo.py"/>
+
+  <!-- Estimator -->
+  <node name="estimator" type="ekf_node" pkg="roscopter" output="screen">
+    <param name="param_filename" value="$(find roscopter)/params/$(arg mav_name).yaml"/>
+    <param name="param_namespace" value="estimator"/>
+    <remap from="imu" to="/imu/data"/>
+    <remap from="pose" to="geo_odom"/>
+    <!-- <remap from="range" to=<RANGE_TOPIC> /> -->
+  </node>
+
+</launch>
