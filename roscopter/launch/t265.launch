@@ -28,7 +28,7 @@
     <param name="param_filename" value="$(find roscopter)/params/$(arg mav_name).yaml"/>
     <param name="param_namespace" value="estimator"/>
     <remap from="imu" to="/imu/data"/>
-    <remap from="pose" to="geo_odom"/>
+    <remap from="pose" to="t265_ned"/>
     <!-- <remap from="range" to=<RANGE_TOPIC> /> -->
   </node>
 

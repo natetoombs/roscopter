@@ -23,12 +23,6 @@
     <rosparam command="load" file="$(find roscopter)/params/$(arg mav_name).yaml"/>
     <rosparam command="load" file="$(find roscopter)/params/$(arg waypoint_list).yaml"/>
 
-    <!-- Vicon Node-->
-    <include file="$(find vicon_bridge)/launch/vicon.launch"/>
-
-    <!-- Vicon ENU to NED Pose -->
-    <node name="enu2ned" pkg="vicon_bridge" type="enu2ned.py"/>
-
     <!-- PID Controller -->
     <node name="controller" pkg="roscopter" type="controller">
       <remap from="estimate" to="odom"/>
@@ -39,7 +33,7 @@
       <param name="param_filename" value="$(find roscopter)/params/$(arg mav_name).yaml"/>
       <param name="param_namespace" value="estimator"/>
       <remap from="imu" to="/imu/data"/>
-      <remap from="pose" to="ned_pose"/>
+      <remap from="pose" to="vicon_ned"/>
       <!-- <remap from="range" to=<RANGE_TOPIC> /> -->
     </node>
 
@@ -52,7 +46,7 @@
 
   <group ns="t265">
     <!-- Run T265 -->
-    <include file="$(find realsense2_camera)/launch/demo_t265.launch"/>
+    <include file="$(find realsense2_camera)/launch/camera_t265.launch"/>
 
     <!-- Add something to convert/calibrate t265 odom? -->
     <node name="nav2geo" pkg="cdc-scripts" type="nav2geo.py"/>
@@ -62,7 +56,7 @@
       <param name="param_filename" value="$(find roscopter)/params/$(arg mav_name).yaml"/>
       <param name="param_namespace" value="estimator"/>
       <remap from="imu" to="/imu/data"/>
-      <remap from="pose" to="geo_odom"/>
+      <remap from="pose" to="t265_ned"/>
       <!-- <remap from="range" to=<RANGE_TOPIC> /> -->
     </node>
   </group>
