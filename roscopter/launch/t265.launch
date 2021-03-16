@@ -18,7 +18,7 @@
   </node>
 
   <!-- Run T265 -->
-  <include file="$(find realsense2_camera)/launch/demo_t265.launch"/>
+  <include file="$(find realsense2_camera)/launch/rs_t265.launch"/>
 
   <!-- Add something to convert/calibrate t265 odom? -->
   <node name="nav2geo" pkg="cdc-scripts" type="nav2geo.py"/>

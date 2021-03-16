@@ -33,7 +33,7 @@
       <param name="param_filename" value="$(find roscopter)/params/$(arg mav_name).yaml"/>
       <param name="param_namespace" value="estimator"/>
       <remap from="imu" to="/imu/data"/>
-      <remap from="pose" to="vicon_ned"/>
+      <remap from="pose" to="/vicon_ned"/>
       <!-- <remap from="range" to=<RANGE_TOPIC> /> -->
     </node>
 
@@ -46,7 +46,7 @@
 
   <group ns="t265">
     <!-- Run T265 -->
-    <include file="$(find realsense2_camera)/launch/camera_t265.launch"/>
+    <include file="$(find realsense2_camera)/launch/rs_t265.launch"/>
 
     <!-- Add something to convert/calibrate t265 odom? -->
     <node name="nav2geo" pkg="cdc-scripts" type="nav2geo.py"/>

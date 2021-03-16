@@ -17,12 +17,6 @@
     <param name="port" value="/dev/ttyACM0"/>
   </node>
 
-  <!-- Vicon Node-->
-  <include file="$(find vicon_bridge)/launch/vicon.launch"/>
-
-  <!-- Vicon ENU to NED Pose -->
-  <node name="enu2ned" pkg="vicon_bridge" type="enu2ned.py"/>
-
   <!-- PID Controller -->
   <node name="controller" pkg="roscopter" type="controller">
     <remap from="estimate" to="odom"/>
@@ -33,7 +27,7 @@
     <param name="param_filename" value="$(find roscopter)/params/$(arg mav_name).yaml"/>
     <param name="param_namespace" value="estimator"/>
     <remap from="imu" to="/imu/data"/>
-    <remap from="pose" to="/ned_pose"/>
+    <remap from="pose" to="/vicon_ned"/>
     <!-- <remap from="range" to=<RANGE_TOPIC> /> -->
   </node>
 
