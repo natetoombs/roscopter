@@ -23,6 +23,11 @@
   <!-- Add something to convert/calibrate t265 odom? -->
   <node name="nav2geo" pkg="cdc-scripts" type="nav2geo.py"/>
 
+  <!-- PID Controller -->
+  <node name="controller" pkg="roscopter" type="controller">
+    <remap from="estimate" to="odom"/>
+  </node>
+
   <!-- Estimator -->
   <node name="estimator" type="ekf_node" pkg="roscopter" output="screen">
     <param name="param_filename" value="$(find roscopter)/params/$(arg mav_name).yaml"/>
